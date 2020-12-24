@@ -14,7 +14,7 @@ sudo apt-get install gcc-8 -y
 
 # Single precision #
 
-
+cd 
 wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.4.tar.gz
 tar xzf gromacs-2020.4.tar.gz
 cd gromacs-2020.4/
