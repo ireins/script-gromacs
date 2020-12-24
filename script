@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#Install missing compilers
+sudo apt-get install g++-4.9 -y
+sudo apt-get install gcc-4.9 -y
+sudo apt-get install g++-5 -y
+sudo apt-get install gcc-5 -y
+sudo apt-get install c++-11 -y
+sudo apt-get install g++-8 -y
+sudo apt-get install gcc-8 -y
+
+
+## Gromacs-2020.4 ##
+
+# Single precision #
+
+
+wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.4.tar.gz
+tar xzf gromacs-2020.4.tar.gz
+cd gromacs-2020.4/
+
+mkdir build_single
+cd build_single
+
+cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_GPU=OFF -DGMX_USE_RDTSCP=ON -DCMAKE_INSTALL_PREFIX=/opt/gromacs-2020.4/ -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_C_COMPILER=/usr/bin/gcc-8 -DGMX_DEFAULT_SUFFIX=ON -DGMX_DOUBLE=OFF
+
+
+make -j12
+make check
+sudo make install
+
+cd ..
+
+# Double precision #
+
+mkdir build_double
+cd build_double
+
+cmake .. -DGMX_BUILD_OWN_FFTW=ON -DGMX_GPU=OFF -DGMX_USE_RDTSCP=ON -DCMAKE_INSTALL_PREFIX=/opt/gromacs-2020.4/ -DCMAKE_CXX_COMPILER=/usr/bin/g++-8 -DCMAKE_C_COMPILER=/usr/bin/gcc-8 -DGMX_DEFAULT_SUFFIX=ON -DGMX_DOUBLE=ON
+
+
+make -j12
+make check
+sudo make install
+
+cd 
+
+
+sudo chmod -R 755 /opt/gromacs-2020.4/
+source /opt/gromacs-2020.4/bin/GMXRC
